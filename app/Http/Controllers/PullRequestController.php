@@ -18,5 +18,6 @@ class PullRequestController extends Controller
         $repo = config('github_service.github.repo');
         $pullRequests = $this->gitHubService->getPullRequests($repo);
         return view('pulls.index', compact('pullRequests', 'repo'));
+        
     }
 }
