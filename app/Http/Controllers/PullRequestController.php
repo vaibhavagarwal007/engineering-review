@@ -18,6 +18,23 @@ class PullRequestController extends Controller
         $repo = config('github_service.github.repo');
         $pullRequests = $this->gitHubService->getPullRequests($repo);
         return view('pulls.index', compact('pullRequests', 'repo'));
-        
+
+    }
+
+    public function commits()
+    {
+        $repo = request()->get('repo', config('github_service.github.repo'));
+        $commits = $this->gitHubService->getCommits($repo);
+
+        $commitData = collect($commits)->map(function ($commit) {
+            return [
+                'author' => $commit['author']['login'] ?? 'Unknown',
+                'profile_url' => $commit['author']['html_url'] ?? null,
+                'message' => $commit['commit']['message'],
+                'timestamp' => $commit['commit']['committer']['date'],
+            ];
+        });
+
+        return view('commits.index', ['commits' => $commitData]);
     }
 }

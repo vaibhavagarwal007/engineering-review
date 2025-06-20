@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PullRequestController;
 /*
@@ -18,3 +19,5 @@ Route::get('/', function () {
 });
 
 Route::get('/pull-requests', [PullRequestController::class, 'index']);
+Route::get('/commits', [PullRequestController::class, 'commits']);
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
